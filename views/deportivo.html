@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>VitaBalance | Clínico</title>
+    <title>VitaBalance | Deportivo</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/clinico.css" rel="stylesheet" />
+    <link href="../css/view.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -73,12 +73,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="mb-3">
-                        <label for="enfermedad" class="form-label">Enfermedad</label>
+                        <label for="deporte" class="form-label">Deporte</label>
                         <div class="dropdown">
-                            <select class="form-control" id="enfermedad">
-                                <option value="diabetes">Diabetes</option>
-                                <option value="precion">Enfermedades del corazón</option>
-                                <option value="ninguna">Ninguna</option>
+                            <select class="form-control" id="deporte">
+                                <option value="futbol">Futbol</option>
+                                <option value="voleibol">Voleibol</option>
+                                <option value="atletismo">Atletismo</option>
                             </select>
                         </div>
                     </div>
@@ -126,13 +126,9 @@
             console.log(rutaReceta)
             var enlaceDescarga = document.createElement('a');
             enlaceDescarga.href = rutaReceta;
-
             enlaceDescarga.download = nombreReceta;
-
             document.body.appendChild(enlaceDescarga);
-
             enlaceDescarga.click();
-
             document.body.removeChild(enlaceDescarga);
         }
 
@@ -140,10 +136,10 @@
             var edad = document.getElementById('edad').value;
             var peso = document.getElementById('peso').value;
             var estatura = document.getElementById('estatura').value;
-            var enfermedad = document.getElementById('enfermedad').value;
+            var deporte = document.getElementById('deporte').value;
 
-            console.log(edad, peso, estatura, enfermedad)
-            if (edad && peso && estatura && enfermedad) {
+            console.log(edad, peso, estatura, deporte)
+            if (edad && peso && estatura && deporte) {
                 var altura = estatura / 100;
                 var imc = peso / (altura * altura);
 
@@ -155,26 +151,29 @@
                 } else {
                     resultadoIMC = "alto";
                 }
-                asignarDieta(resultadoIMC, edad, enfermedad);
+                asignarDieta(resultadoIMC, edad);
             } else {
                 document.getElementById('error').innerHTML = "Por favor, completa todos los campos.";
             }
         }
 
-        function asignarDieta(resultadoIMC, edad, enfermedad) {
+        function asignarDieta(resultadoIMC, edad) {
             var receta = "";
 
-            // Lógica para crear las dietas según el IMC, edad y enfermedad
-            if (resultadoIMC === "bajo" && enfermedad === 'ninguna') {
-                descargarDieta("receta_3.pdf");
-            } else if (resultadoIMC === "normal" && enfermedad != 'ninguna' && edad < 30) {
-                descargarDieta("receta_3.pdf");
-            } else if (enfermedad != 'ninguna' && edad > 30) {
-                descargarDieta("receta_2.pdf");
-            } else {
+            if (resultadoIMC === "bajo") {
                 descargarDieta("receta_1.pdf");
+            } else if (resultadoIMC === "normal" && edad < 30) {
+                descargarDieta("receta_2.pdf");
+            } else if (resultadoIMC != 'alto' && edad > 30) {
+                descargarDieta("receta_3.pdf");
+            } else {
+                descargarDieta("receta_2.pdf");
             }
             document.getElementById('error').innerHTML = "";
+            document.getElementById('edad').value = "";
+            document.getElementById('peso').value = "";
+            document.getElementById('estatura').value = "";
+            document.getElementById('deporte').value = "";
         }
     </script>
 </body>

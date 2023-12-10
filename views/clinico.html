@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/clinico.css" rel="stylesheet" />
+    <link href="../css/view.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -126,13 +126,9 @@
             console.log(rutaReceta)
             var enlaceDescarga = document.createElement('a');
             enlaceDescarga.href = rutaReceta;
-
             enlaceDescarga.download = nombreReceta;
-
             document.body.appendChild(enlaceDescarga);
-
             enlaceDescarga.click();
-
             document.body.removeChild(enlaceDescarga);
         }
 
@@ -164,7 +160,6 @@
         function asignarDieta(resultadoIMC, edad, enfermedad) {
             var receta = "";
 
-            // Lógica para crear las dietas según el IMC, edad y enfermedad
             if (resultadoIMC === "bajo" && enfermedad === 'ninguna') {
                 descargarDieta("receta_3.pdf");
             } else if (resultadoIMC === "normal" && enfermedad != 'ninguna' && edad < 30) {
@@ -175,6 +170,11 @@
                 descargarDieta("receta_1.pdf");
             }
             document.getElementById('error').innerHTML = "";
+            document.getElementById('edad').value = "";
+            document.getElementById('peso').value = "";
+            document.getElementById('estatura').value = "";
+            document.getElementById('enfermedad').value = "";
+
         }
     </script>
 </body>
