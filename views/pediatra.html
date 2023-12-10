@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../css/clinico.css" rel="stylesheet" />
+    <link href="../css/view.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -45,7 +45,7 @@
                 <div class="col-lg-12">
                     <div class="mb-3">
                         <label for="edad" class="form-label">Edad</label>
-                        <input type="number" class="form-control" id="edad" min="18" max="110">
+                        <input type="number" class="form-control" id="edad" min="1" max="18">
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     <div class="mb-3">
                         <label for="peso" class="form-label">Peso (Kg)</label>
                         <div class="dropdown">
-                            <input type="number" class="form-control" id="peso" min="10">
+                            <input type="number" class="form-control" id="peso">
                         </div>
                     </div>
                 </div>
@@ -107,17 +107,13 @@
     <script src="../js/scripts.js"></script>
     <script>
         function descargarDieta(nombreReceta) {
-            var rutaReceta = '/assets/pdf/pediatra/' + nombreReceta;
+            var rutaReceta = '/assets/pdf/pediatrico/' + nombreReceta;
             console.log(rutaReceta)
             var enlaceDescarga = document.createElement('a');
             enlaceDescarga.href = rutaReceta;
-
             enlaceDescarga.download = nombreReceta;
-
             document.body.appendChild(enlaceDescarga);
-
             enlaceDescarga.click();
-
             document.body.removeChild(enlaceDescarga);
         }
 
@@ -139,26 +135,31 @@
                 } else {
                     resultadoIMC = "alto";
                 }
-                asignarDieta(resultadoIMC);
+                asignarDieta(resultadoIMC, edad);
             } else {
                 document.getElementById('error').innerHTML = "Por favor, completa todos los campos.";
             }
         }
 
-        function asignarDieta(resultadoIMC) {
+        function asignarDieta(resultadoIMC, edad) {
             var receta = "";
 
-            // Lógica para crear las dietas según el IMC, edad y enfermedad
-            if (resultadoIMC === "bajo") {
+            if (resultadoIMC === "bajo" && edad > 3) {
                 descargarDieta("receta_3.pdf");
-            } else if (resultadoIMC === "normal") {
-                descargarDieta("receta_3.pdf");
-            } else if (resultadoIMC = 'alto') {
+            } else if (resultadoIMC === "normal" && edad > 3) {
                 descargarDieta("receta_2.pdf");
+            } else if (resultadoIMC = 'alto' && edad > 3) {
+                descargarDieta("receta_1.pdf");
+            } else if (edad < 3) {
+                descargarDieta("receta_4.pdf")
             } else {
-                descargarDieta("receta_4.pdf");
+                descargarDieta("receta_2.pdf");
             }
+
             document.getElementById('error').innerHTML = "";
+            document.getElementById('edad').value = "";
+            document.getElementById('peso').value = "";
+            document.getElementById('estatura').value = "";
         }
     </script>
 </body>
